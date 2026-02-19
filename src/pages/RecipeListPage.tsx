@@ -4,6 +4,7 @@ import { getAllRecipes, findRecipes } from '../api/recipeApi'
 import AddRecipeDialog from '../components/AddRecipeDialog'
 import TagFilter from '../components/TagFilter'
 import { firstImageUrl } from '../utils/image'
+import SoupBowl from '../components/SoupBowl'
 
 interface Props {
   onSelectRecipe: (uuid: string) => void
@@ -75,6 +76,7 @@ export default function RecipeListPage({ onSelectRecipe }: Props) {
   return (
     <div className="page">
       <header className="app-header">
+        <SoupBowl />
         <h1>PRZEPIŚNIK</h1>
         <div className="header-divider" />
         <p className="header-subtitle">Kuchnia Asi i Arka</p>

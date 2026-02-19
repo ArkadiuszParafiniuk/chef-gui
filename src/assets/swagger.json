@@ -286,6 +286,34 @@
                 }
             }
         },
+        "/recipe/{recipeUuid}/photo/{photoIndex}": {
+            "delete": {
+                "tags": ["recipe"],
+                "operationId": "deletePhoto",
+                "parameters": [{
+                        "name": "recipeUuid",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }, {
+                        "name": "photoIndex",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/recipe/delete/{recipeUuid}": {
             "delete": {
                 "tags": ["recipe"],

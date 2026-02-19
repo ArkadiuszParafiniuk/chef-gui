@@ -68,6 +68,11 @@ export async function deleteRecipe(uuid: string): Promise<void> {
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
 }
 
+export async function deletePhoto(recipeUuid: string, photoIndex: number): Promise<void> {
+  const res = await fetch(`${BASE_URL}/recipe/${recipeUuid}/photo/${photoIndex}`, { method: 'DELETE' })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+}
+
 export async function addPhoto(recipeUuid: string, image: File): Promise<void> {
   const formData = new FormData()
   formData.append('image', image)

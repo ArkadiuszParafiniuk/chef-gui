@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import type { Recipe, TypeOfDish } from '../types/recipe'
-import { getRecipeByUuid, addPhoto, deleteRecipe, incrementCookCount } from '../api/recipeApi'
+import { getRecipeByUuid, addPhoto, deletePhoto, deleteRecipe, incrementCookCount } from '../api/recipeApi'
 import AddRecipeDialog from '../components/AddRecipeDialog'
+import TrashIcon from '../components/TrashIcon'
 import { binaryToDataUrl } from '../utils/image'
 
 interface Props {
@@ -39,6 +40,7 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [lightbox, setLightbox] = useState<string | null>(null)
+  const [deletingPhotoIndex, setDeletingPhotoIndex] = useState<number | null>(null)
   const [copied, setCopied] = useState(false)
 
   const copyUrl = () => {
@@ -88,6 +90,18 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
     }
   }
 
+  async function handleDeletePhoto(index: number) {
+    setDeletingPhotoIndex(index)
+    try {
+      await deletePhoto(uuid, index)
+      fetchRecipe()
+    } catch {
+      // ignorujemy błąd — zdjęcie pozostanie w galerii
+    } finally {
+      setDeletingPhotoIndex(null)
+    }
+  }
+
   async function handlePhotoChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
@@ -128,7 +142,7 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
               ✏️ Edytuj
             </button>
             <button className="btn-delete-recipe" onClick={() => setShowConfirm(true)}>
-              🗑️ Usuń
+              <TrashIcon size={16} /> Usuń
             </button>
           </div>
         )}
@@ -193,14 +207,23 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
             {images.length > 0 ? (
               <div className="gallery">
                 {images.map((src, i) => (
-                  <button
-                    key={i}
-                    className="gallery-item"
-                    onClick={() => setLightbox(src)}
-                    aria-label={`Zdjęcie ${i + 1}`}
-                  >
-                    <img src={src} alt={`Zdjęcie ${i + 1}`} />
-                  </button>
+                  <div key={i} className="gallery-item-wrapper">
+                    <button
+                      className="gallery-item"
+                      onClick={() => setLightbox(src)}
+                      aria-label={`Zdjęcie ${i + 1}`}
+                    >
+                      <img src={src} alt={`Zdjęcie ${i + 1}`} />
+                    </button>
+                    <button
+                      className="gallery-item-delete"
+                      onClick={() => handleDeletePhoto(i)}
+                      disabled={deletingPhotoIndex === i}
+                      aria-label="Usuń zdjęcie"
+                    >
+                      {deletingPhotoIndex === i ? '…' : <TrashIcon size={14} />}
+                    </button>
+                  </div>
                 ))}
               </div>
             ) : (
@@ -309,7 +332,7 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
             aria-labelledby="confirm-title"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="confirm-icon">🗑️</div>
+            <div className="confirm-icon"><TrashIcon size={40} /></div>
             <h2 className="confirm-title" id="confirm-title">
               Usuń przepis
             </h2>

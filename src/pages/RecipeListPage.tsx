@@ -78,8 +78,7 @@ export default function RecipeListPage({ onSelectRecipe }: Props) {
       <header className="app-header">
         <SoupBowl />
         <h1>PRZEPIŚNIK</h1>
-        <div className="header-divider" />
-        <p className="header-subtitle">Kuchnia Asi i Arka</p>
+
       </header>
 
       <div className="search-section">

@@ -546,16 +546,6 @@
 
 /* ── Header ─────────────────────────────────────────── */
 
-.app-header {
-  position: relative;
-  text-align: center;
-  padding: 3rem 1rem 2.5rem;
-  background: #18110c;
-  margin: 0 -1rem 2rem;
-  color: white;
-  overflow: hidden;
-}
-
 @keyframes steam {
   0%   { opacity: 0;    transform: translateY(0)   scaleX(1); }
   30%  { opacity: 1; }
@@ -568,40 +558,36 @@
   transform-origin: center bottom;
 }
 
-.app-header::before {
+.app-header {
+  padding: 1.5rem 1rem 0;
+  background: #18110c;
+  margin: 0 -1rem 2rem;
+  color: white;
+  overflow: hidden;
+}
+
+.app-header::after {
   content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(230, 126, 34, 0.18) 0%, transparent 70%);
-  pointer-events: none;
+  display: block;
+  height: 2px;
+  background: linear-gradient(to right, transparent 0%, #e67e22 25%, #e67e22 75%, transparent 100%);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
 }
 
 .app-header h1 {
-  position: relative;
-  font-size: 3.2rem;
+  font-size: 2.6rem;
   font-weight: 800;
   letter-spacing: 0.22em;
+  text-indent: 0.22em;
   margin: 0;
   color: #ffffff;
-  text-indent: 0.22em; /* optical balance for letter-spacing */
-}
-
-.header-divider {
-  width: 2.5rem;
-  height: 2px;
-  background: #e67e22;
-  margin: 1rem auto 0.9rem;
-  border-radius: 2px;
-}
-
-.header-subtitle {
-  position: relative;
-  color: rgba(255, 255, 255, 0.45);
-  font-size: 0.82rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  text-indent: 0.25em;
-  margin: 0;
 }
 
 /* ── Search ─────────────────────────────────────────── */
@@ -1409,7 +1395,7 @@
 
 @media (max-width: 600px) {
   .app-header h1 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     letter-spacing: 0.15em;
   }
 

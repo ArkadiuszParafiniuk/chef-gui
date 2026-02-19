@@ -76,9 +76,10 @@ export default function RecipeListPage({ onSelectRecipe }: Props) {
   return (
     <div className="page">
       <header className="app-header">
-        <SoupBowl />
-        <h1>PRZEPIŚNIK</h1>
-
+        <div className="header-inner">
+          <SoupBowl size={58} />
+          <h1>PRZEPIŚNIK</h1>
+        </div>
       </header>
 
       <div className="search-section">

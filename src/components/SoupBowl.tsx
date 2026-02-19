@@ -1,9 +1,13 @@
-export default function SoupBowl() {
+interface Props {
+  size?: number
+}
+
+export default function SoupBowl({ size = 110 }: Props) {
   return (
     <svg
       viewBox="0 0 120 105"
-      width="110"
-      height="110"
+      width={size}
+      height={size}
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >

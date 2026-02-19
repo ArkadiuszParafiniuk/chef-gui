@@ -1,0 +1,369 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [{
+            "url": "http://localhost:8333",
+            "description": "Generated server url"
+        }
+    ],
+    "tags": [{
+            "name": "recipe",
+            "description": "Recipe controller API"
+        }
+    ],
+    "paths": {
+        "/recipe/update/{recipeUuid}": {
+            "put": {
+                "tags": ["recipe"],
+                "operationId": "updateRecipe",
+                "parameters": [{
+                        "name": "recipeUuid",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Recipe"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Recipe"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recipe/{recipeUuid}/addPhoto": {
+            "post": {
+                "tags": ["recipe"],
+                "operationId": "addPhoto",
+                "parameters": [{
+                        "name": "recipeUuid",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": ["image"],
+                                "type": "object",
+                                "properties": {
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/recipe/create": {
+            "post": {
+                "tags": ["recipe"],
+                "operationId": "createRecipe",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Recipe"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Recipe"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recipeTag/find": {
+            "get": {
+                "tags": ["recipe"],
+                "operationId": "findByParameters",
+                "parameters": [{
+                        "name": "tagName",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recipe/{recipeUuid}": {
+            "get": {
+                "tags": ["recipe"],
+                "operationId": "getByUuid",
+                "parameters": [{
+                        "name": "recipeUuid",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Recipe"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recipe/isEditEnabled": {
+            "get": {
+                "tags": ["recipe"],
+                "operationId": "isEditEnabled",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recipe/getAll": {
+            "get": {
+                "tags": ["recipe"],
+                "operationId": "getAllRecipes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Recipe"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recipe/find": {
+            "get": {
+                "tags": ["recipe"],
+                "operationId": "findByParameters_1",
+                "parameters": [{
+                        "name": "title",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }, {
+                        "name": "typeOfDish",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }, {
+                        "name": "tags",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Recipe"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/recipe/delete/{recipeUuid}": {
+            "delete": {
+                "tags": ["recipe"],
+                "operationId": "deleteRecipe",
+                "parameters": [{
+                        "name": "recipeUuid",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Binary": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "format": "byte"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "byte"
+                        }
+                    }
+                }
+            },
+            "Ingredient": {
+                "type": "object",
+                "properties": {
+                    "ingredient": {
+                        "type": "string"
+                    },
+                    "amount": {
+                        "type": "string"
+                    }
+                },
+                "description": "Ingredient schema"
+            },
+            "ObjectId": {
+                "type": "object",
+                "properties": {
+                    "timestamp": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Recipe": {
+                "required": ["title", "uuid"],
+                "type": "object",
+                "properties": {
+                    "get_id": {
+                        "$ref": "#/components/schemas/ObjectId"
+                    },
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "ingredients": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Ingredient"
+                        }
+                    },
+                    "typeOfDish": {
+                        "type": "string",
+                        "enum": ["BREAKFAST", "DINNER", "DESSERT", "DRINK"]
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Binary"
+                        }
+                    }
+                },
+                "description": "Recipe schema"
+            }
+        }
+    }
+}

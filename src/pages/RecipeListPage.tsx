@@ -161,12 +161,7 @@ export default function RecipeListPage({ onSelectRecipe }: Props) {
                         {DISH_LABELS[recipe.typeOfDish]}
                       </span>
                     )}
-                    {recipe.content && (
-                      <p className="card-preview">
-                        {recipe.content.slice(0, 110)}
-                        {recipe.content.length > 110 ? '…' : ''}
-                      </p>
-                    )}
+
                     {recipe.tags && recipe.tags.length > 0 && (
                       <div className="tags">
                         {recipe.tags.slice(0, 3).map((tag) => (

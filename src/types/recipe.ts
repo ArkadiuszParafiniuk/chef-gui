@@ -19,4 +19,5 @@ export interface Recipe {
   typeOfDish?: TypeOfDish
   tags?: string[]
   images?: Binary[]
+  cookCount?: number
 }

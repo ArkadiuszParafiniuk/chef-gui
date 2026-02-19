@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import type { Recipe, TypeOfDish } from '../types/recipe'
-import { getRecipeByUuid, addPhoto, deleteRecipe } from '../api/recipeApi'
+import { getRecipeByUuid, addPhoto, deleteRecipe, incrementCookCount } from '../api/recipeApi'
 import AddRecipeDialog from '../components/AddRecipeDialog'
 import { binaryToDataUrl } from '../utils/image'
 
@@ -34,6 +34,8 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
   const [showConfirm, setShowConfirm] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<string | null>(null)
+  const [cooking, setCooking] = useState(false)
+  const [cookError, setCookError] = useState<string | null>(null)
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [lightbox, setLightbox] = useState<string | null>(null)
@@ -53,6 +55,19 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
     fetchRecipe()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uuid])
+
+  async function handleCook() {
+    setCooking(true)
+    setCookError(null)
+    try {
+      const updated = await incrementCookCount(uuid)
+      setRecipe(updated)
+    } catch (err) {
+      setCookError(err instanceof Error ? err.message : 'Błąd')
+    } finally {
+      setCooking(false)
+    }
+  }
 
   async function handleDelete() {
     setDeleting(true)
@@ -127,6 +142,24 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
                 {DISH_LABELS[recipe.typeOfDish]}
               </span>
             )}
+          </div>
+
+          <div className="cook-counter">
+            <button
+              className="btn-cook"
+              onClick={handleCook}
+              disabled={cooking}
+              title="Kliknij, aby oznaczyć że właśnie ugotowałeś ten przepis"
+            >
+              {cooking ? '…' : '🍳 Ugotowane!'}
+            </button>
+            <div className="cook-count-display">
+              <span className="cook-count-number">{recipe.cookCount ?? 0}</span>
+              <span className="cook-count-label">
+                {(recipe.cookCount ?? 0) === 1 ? 'raz' : 'razy'}
+              </span>
+            </div>
+            {cookError && <span className="cook-error">⚠️ {cookError}</span>}
           </div>
 
           {recipe.tags && recipe.tags.length > 0 && (

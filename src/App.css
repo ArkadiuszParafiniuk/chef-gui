@@ -959,6 +959,74 @@
   line-height: 1.2;
 }
 
+/* ── Cook counter ───────────────────────────────────── */
+
+.cook-counter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0 1.25rem;
+  flex-wrap: wrap;
+}
+
+.btn-cook {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.3rem;
+  background: #18110c;
+  color: white;
+  border: 2px solid #18110c;
+  border-radius: 10px;
+  font-size: 0.97rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn-cook:hover:not(:disabled) {
+  background: #2d1f14;
+  transform: translateY(-1px);
+}
+
+.btn-cook:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn-cook:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.cook-count-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  min-width: 3rem;
+}
+
+.cook-count-number {
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: #e67e22;
+  line-height: 1;
+}
+
+.cook-count-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cook-error {
+  font-size: 0.85rem;
+  color: #e74c3c;
+}
+
 /* ── Sections ───────────────────────────────────────── */
 
 .detail-section {

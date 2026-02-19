@@ -57,6 +57,12 @@ export async function findTags(tagName?: string): Promise<string[]> {
   return res.json() as Promise<string[]>
 }
 
+export async function incrementCookCount(uuid: string): Promise<Recipe> {
+  const res = await fetch(`${BASE_URL}/recipe/${uuid}/cook`, { method: 'POST' })
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  return res.json() as Promise<Recipe>
+}
+
 export async function deleteRecipe(uuid: string): Promise<void> {
   const res = await fetch(`${BASE_URL}/recipe/delete/${uuid}`, { method: 'DELETE' })
   if (!res.ok) throw new Error(`HTTP ${res.status}`)

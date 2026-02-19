@@ -52,6 +52,33 @@
                 }
             }
         },
+        "/recipe/{recipeUuid}/cook": {
+            "post": {
+                "tags": ["recipe"],
+                "operationId": "incrementCookCount",
+                "parameters": [{
+                        "name": "recipeUuid",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Recipe"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/recipe/{recipeUuid}/addPhoto": {
             "post": {
                 "tags": ["recipe"],
@@ -360,9 +387,13 @@
                         "items": {
                             "$ref": "#/components/schemas/Binary"
                         }
+                    },
+                    "cookCount": {
+                        "type": "integer",
+                        "format": "int32"
                     }
                 },
-                "description": "Recipe schema"
+                "description": "Recipe schem"
             }
         }
     }

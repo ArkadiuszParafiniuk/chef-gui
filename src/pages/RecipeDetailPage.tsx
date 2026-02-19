@@ -39,6 +39,13 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
   const [uploading, setUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
   const [lightbox, setLightbox] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
+
+  const copyUrl = () => {
+    navigator.clipboard.writeText(window.location.href)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -109,14 +116,21 @@ export default function RecipeDetailPage({ uuid, onBack }: Props) {
           ← Wróć do listy
         </button>
         {recipe && !loading && (
-          <>
+          <div className="detail-actions">
+            <button
+              className={`btn-copy-url${copied ? ' btn-copy-url--copied' : ''}`}
+              onClick={copyUrl}
+              title="Kopiuj link do przepisu"
+            >
+              {copied ? '✓ Skopiowano' : '🔗 Kopiuj link'}
+            </button>
             <button className="btn-edit-recipe" onClick={() => setShowEdit(true)}>
               ✏️ Edytuj
             </button>
             <button className="btn-delete-recipe" onClick={() => setShowConfirm(true)}>
               🗑️ Usuń
             </button>
-          </>
+          </div>
         )}
       </div>
 
